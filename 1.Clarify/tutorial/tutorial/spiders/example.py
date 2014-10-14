@@ -26,7 +26,7 @@ class ExampleSpider(scrapy.Spider):
         item['education']=''.join(response.css('.job_request span:nth-child(4)').xpath('text()').extract()).strip()    
         item['employment']=''.join(response.css('.job_request span:nth-child(5)').xpath('text()').extract()).strip()    
         item['points']=''.join(response.css('.job_request').xpath('text()').extract()).strip()    
-        item['description']=''.join(response.css('.job_bt *').xpath('text()').extract()).strip()    
+        item['description']='\r\n'.join(response.css('.job_bt *').xpath('text()').extract()).strip()    
         item['logo']=''.join(response.css('.job_company   > dt > a > img').xpath('@src').extract()).strip()    
         item['domain']=''.join(response.css('.job_company .c_feature:nth-child(1) li:nth-child(1)').xpath('text()').extract()).strip()    
         item['scale']=''.join(response.css('.job_company .c_feature:nth-child(1) li:nth-child(2)').xpath('text()').extract()).strip()    
