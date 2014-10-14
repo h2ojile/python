@@ -7,11 +7,16 @@ $def with (jobs)
 	<title>Document</title>
 </head>
 <body>
+<dl>
+
 $for job in jobs:
-	<dl>
 	<dt>$job['title']</dt>
-	<dd>$job['description']</dd>
-	</dl>
+	<dd>
+	<div>$job['salary']</div>
+	<div>$job['description']</div>
+	</dd>
+
+</dl>
 
 <script>
 
