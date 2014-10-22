@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+    body,
+    html,
+    #allmap {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        margin: 0;
+        font-family: "微软雅黑";
+    }
+    #l-map {
+        height: 100%;
+        width: 78%;
+        float: left;
+        border-right: 2px solid #bcbcbc;
+    }
+    #r-result {
+        height: 100%;
+        width: 20%;
+        float: left;
+    }
+    </style>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=0B525558eeee6acaa168bd8046950a76"></script>
+    <title>添加多个标注点</title>
+</head>
+
+<body>
+    <div id="allmap"></div>
+</body>
+
+</html>
+<script type="text/javascript">
+function prepareMap(address, city) {
+    var map = new BMap.Map("allmap");
+
+    map.enableScrollWheelZoom();
+    map.addControl(new BMap.NavigationControl()); //添加默认缩放平移控件
+
+    var sMyGeo = new BMap.Geocoder();
+    sMyGeo.getPoint(address, function(sPoint) {
+        if (sPoint) {
+            map.addOverlay(new BMap.Marker(sPoint));
+            map.centerAndZoom(sPoint, 13);
+        }
+    }, city);
+    return map;
+}
+
+function addMarker(address, city,labelText) {
+    var sMyGeo = new BMap.Geocoder();
+    sMyGeo.getPoint(address, function(sPoint) {
+        if (sPoint) {
+        	var marker=new BMap.Marker(sPoint);
+            map.addOverlay(marker);
+            var label =new BMap.Label(labelText,{offset:new BMap.Size(20,-10)})
+           
+            marker.setLabel(label)
+        }
+    }, city);
+}
+
+var map = prepareMap("五角场", "上海");
+
+var xml = new XMLHttpRequest();
+xml.open('get', 'items.json', false)
+xml.onreadystatechange = function() {
+    if (xml.readyState == 4 && xml.status == 200) {
+        var items = JSON.parse(xml.responseText);
+        addPoints(items);
+    }
+}
+xml.send();
+
+function addPoints(items) {
+    for (var i in items) {
+    	//if(i>10)break;
+        var item = items[i];
+        addMarker(item['address'], item['city'],item['title']);
+    }
+}
+</script>
+
+<style type="text/css">
+		body, html{width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
+		#l-map{height:300px;width:100%;}
+		#r-result{width:100%; font-size:14px;line-height:20px;}
+	</style>
+</body>
+
+</html>

@@ -10,9 +10,9 @@ $def with (jobs)
 <dl>
 
 $for job in jobs:
-	<dt>$job['title']</dt>
+	<dt><a href="$job['url']"> <span>$job['title'] </span><span>$job['salary']</span> <span>$job['scale'] </span></a></dt>
 	<dd>
-	<div>$job['salary']</div>
+
 	<div>$job['description']</div>
 	</dd>
 

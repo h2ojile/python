@@ -2,6 +2,7 @@
 
 import web
 import json
+import re
         
 urls = (
     '/', 'index'
@@ -9,6 +10,7 @@ urls = (
 app = web.application(urls, globals())
 
 pythonJobs =  json.load(open('items.json'))
+pythonJobs.sort(key = lambda x:int( re.findall(r'\d+',x['salary'])[0]))
 
 class index:        
     def GET(self):
